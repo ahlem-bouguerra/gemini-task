@@ -1,0 +1,15 @@
+services:
+  gemini-bot:
+    build: .
+    volumes:
+      - .:/app
+      - ./user_data:/app/user_data
+      - ./downloads:/app/downloads
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=${XAUTHORITY}
+    network_mode: "host"
+    stdin_open: true
+    tty: true
+    privileged: true
