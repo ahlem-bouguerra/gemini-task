@@ -1,0 +1,5 @@
+user_data
+uploads
+downloads
+__pycache__
+*.pyc

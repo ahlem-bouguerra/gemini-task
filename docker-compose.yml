@@ -1,15 +1,47 @@
 services:
-  gemini-bot:
-    build: .
+  backend:
+    build: ./backend
+    container_name: gemini-backend
+    ports:
+      - "8000:8000"
     volumes:
-      - .:/app
-      - ./user_data:/app/user_data
-      - ./downloads:/app/downloads
+      - ./backend:/app
+      - ./user_data:/data/user_data
+      - ./uploads:/data/uploads
+      - ./downloads:/data/downloads
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
+
+    deploy:
+      resources:
+        limits:
+          memory: 2G        # ✅ Augmente à 4GB
+        reservations:
+          memory: 2G        # ✅ Réserve 2GB minimum
+    shm_size: '1gb'  
     environment:
-      - DISPLAY=${DISPLAY}
-      - XAUTHORITY=${XAUTHORITY}
-    network_mode: "host"
+      - DISPLAY=${DISPLAY:-:0}
+      - PYTHONUNBUFFERED=1
+    privileged: true
     stdin_open: true
     tty: true
-    privileged: true
+    networks:
+      - gemini-network
+
+  frontend:
+    build: ./frontend
+    container_name: gemini-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - gemini-network
+
+networks:
+  gemini-network:
+    driver: bridge

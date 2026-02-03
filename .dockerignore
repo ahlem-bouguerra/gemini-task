@@ -4,3 +4,6 @@ __pycache__/
 *.jpeg
 *.jpg
 *.png
+**/user_data
+*.sqlite
+*.log

@@ -15,3 +15,5 @@ user_data/
 downloads/
 debug_*.png
 *.log
+uploads/
+downloads/

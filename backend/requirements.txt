@@ -1,0 +1,14 @@
+# FastAPI backend
+fastapi==0.110.0
+uvicorn[standard]==0.29.0
+
+# File uploads
+python-multipart==0.0.9
+
+# Playwright
+playwright==1.57.0
+playwright-stealth==1.0.6
+
+# Utils
+requests==2.32.3
+pillow==10.4.0

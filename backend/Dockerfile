@@ -9,12 +9,15 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
 
-# Create a directory for user data (browser session)
-RUN mkdir -p /app/user_data
+RUN playwright install chromium
+
+# Create necessary directories
+RUN mkdir -p /data/user_data /data/uploads /data/downloads
+
+
 
 COPY . .
 
-# Set environment variables
 ENV PYTHONUNBUFFERED=1
 
-CMD ["python3", "gemini_process.py"]
+CMD ["uvicorn", "web_app:app", "--host", "0.0.0.0", "--port", "8000"]
