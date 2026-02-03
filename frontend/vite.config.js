@@ -6,25 +6,13 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 3000,
-    watch: {
-      usePolling: true
-    },
+    watch: { usePolling: true },
     proxy: {
-      "/upload": {
-        target: "http://gemini-backend:8000",  // Utiliser le nom du conteneur
-        changeOrigin: true,
-        secure: false
-      },
-      "/run": {
-        target: "http://gemini-backend:8000",
-        changeOrigin: true,
-        secure: false
-      },
-      "/downloads": {
-        target: "http://gemini-backend:8000",
-        changeOrigin: true,
-        secure: false
-      }
-    }
-  }
+      "/upload-batch": { target: "http://gemini-backend:8000", changeOrigin: true, secure: false },
+      "/run-batch": { target: "http://gemini-backend:8000", changeOrigin: true, secure: false },
+      "/job": { target: "http://gemini-backend:8000", changeOrigin: true, secure: false },
+      "/downloads": { target: "http://gemini-backend:8000", changeOrigin: true, secure: false },
+      "/jobs": { target: "http://gemini-backend:8000", changeOrigin: true, secure: false },
+    },
+  },
 });
